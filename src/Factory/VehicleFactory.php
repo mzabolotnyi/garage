@@ -6,6 +6,7 @@ use Exception\UnknownVehicleTypeException;
 use Model\Boat;
 use Model\Car;
 use Model\Helicopter;
+use Model\Horse;
 use Model\Truck;
 
 class VehicleFactory
@@ -14,15 +15,25 @@ class VehicleFactory
     {
         switch ($type) {
             case Car::class:
-                return new Car($name);
+                $vehicle = new Car($name);
+                break;
             case Truck::class:
-                return new Truck($name);
+                $vehicle = new Truck($name);
+                break;
             case Boat::class:
-                return new Boat($name);
+                $vehicle = new Boat($name);
+                break;
             case Helicopter::class:
-                return new Helicopter($name);
+                $vehicle = new Helicopter($name);
+                break;
+            case Horse::class:
+                $vehicle = new Horse($name);
+                break;
             default:
                 throw new UnknownVehicleTypeException($type);
         }
+
+        $vehicle->setup();
+        return $vehicle;
     }
 }

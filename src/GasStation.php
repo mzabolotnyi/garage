@@ -4,22 +4,22 @@ use Exception\InvalidFuelException;
 
 class GasStation
 {
-    public function refuelGas(\Model\Vehicle $vehicle)
+    public function refuelGas(\Model\FuelTank $fuelTank)
     {
-        $this->refuel($vehicle, new \Model\Gas());
+        $this->refuel($fuelTank, new \Model\Gas());
     }
 
-    public function refuelDiesel(\Model\Vehicle $vehicle)
+    public function refuelDiesel(\Model\FuelTank $fuelTank)
     {
-        $this->refuel($vehicle, new \Model\Diesel());
+        $this->refuel($fuelTank, new \Model\Diesel());
     }
 
-    private function refuel(\Model\Vehicle $vehicle, \Model\Fuel $fuel)
+    private function refuel(\Model\FuelTank $fuelTank, \Model\Fuel $fuel)
     {
-        if (!$vehicle->canRefuel($fuel)) {
-            throw new InvalidFuelException($vehicle, $fuel);
+        if (!$fuelTank->canRefuel($fuel)) {
+            throw new InvalidFuelException($fuel);
         }
 
-        $vehicle->refuel($fuel);
+        $fuelTank->refuel($fuel);
     }
 }

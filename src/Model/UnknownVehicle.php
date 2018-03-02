@@ -8,4 +8,12 @@ class UnknownVehicle extends Vehicle
     {
         parent::__construct('UnknownVehicle', $name);
     }
+
+    public function setup()
+    {
+    }
+
+    public function introduce()
+    {
+    }
 }

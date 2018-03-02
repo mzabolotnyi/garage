@@ -2,32 +2,36 @@
 
 namespace Model;
 
-class Boat extends Vehicle implements MovableInterface, SwimableInterface
+class Boat extends Vehicle
 {
+    /** @var BoatEngine */
+    public $engine;
+
+    /** @var FuelTank */
+    public $fuelTank;
+
     public function __construct(string $name)
     {
         parent::__construct('Boat', $name);
-        $this->availableFuels = [Diesel::NAME];
     }
 
-    public function move()
+    public function setup()
     {
-        echo $this . ' moving' . '<br/>';
-
-        return $this;
+        $this->engine = new BoatEngine();
+        $this->fuelTank = new FuelTank([Diesel::NAME]);
     }
 
-    public function stop()
+    public function introduce()
     {
-        echo $this . ' stopped' . '<br/>';
+        echo $this . '<br/>';
 
-        return $this;
-    }
+        $this->engine->start();
+        $this->engine->swim();
+        $this->engine->stop();
 
-    public function swim()
-    {
-        echo $this . ' swimming' . '<br/>';
+        $gasStation = new \GasStation();
+        $gasStation->refuelDiesel($this->fuelTank);
 
-        return $this;
+        echo '===============================' . '<br/>';
     }
 }

@@ -2,39 +2,42 @@
 
 namespace Model;
 
-class Car extends Vehicle implements MovableInterface, PlayableInterface
+class Car extends Vehicle
 {
+    /** @var CarEngine */
+    public $engine;
+
+    /** @var MusicPlayer */
+    public $musicPayer;
+
+    /** @var FuelTank */
+    public $fuelTank;
+
     public function __construct(string $name)
     {
         parent::__construct('Car', $name);
-        $this->availableFuels = [Gas::NAME, Diesel::NAME];
     }
 
-    public function move()
+    public function setup()
     {
-        echo $this . ' moving' . '<br/>';
-
-        return $this;
+        $this->engine = new CarEngine();
+        $this->musicPayer = new MusicPlayer();
+        $this->fuelTank = new FuelTank([Gas::NAME, Diesel::NAME]);
     }
 
-    public function stop()
+    public function introduce()
     {
-        echo $this . ' stopped' . '<br/>';
+        echo $this . '<br/>';
 
-        return $this;
-    }
+        $this->engine->start();
+        $this->engine->drive();
+        $this->musicPayer->musicOn();
+        $this->musicPayer->musicOff();
+        $this->engine->stop();
 
-    public function musicOn()
-    {
-        echo $this . ' music switched on' . '<br/>';
+        $gasStation = new \GasStation();
+        $gasStation->refuelGas($this->fuelTank);
 
-        return $this;
-    }
-
-    public function musicOff()
-    {
-        echo $this . ' music switched off' . '<br/>';
-
-        return $this;
+        echo '===============================' . '<br/>';
     }
 }

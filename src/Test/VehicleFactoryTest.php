@@ -6,6 +6,7 @@ use Exception\UnknownVehicleTypeException;
 use Model\Boat;
 use Model\Car;
 use Model\Helicopter;
+use Model\Horse;
 use Model\Truck;
 use Model\UnknownVehicle;
 use PHPUnit\Framework\TestCase;
@@ -27,6 +28,9 @@ class VehicleFactoryTest extends TestCase
 
         $helicopter = $vehicleFactory->createVehicle(Helicopter::class, 'Some name');
         self::assertInstanceOf(Helicopter::class, $helicopter);
+
+        $helicopter = $vehicleFactory->createVehicle(Horse::class, 'Some name');
+        self::assertInstanceOf(Horse::class, $helicopter);
 
         $this->expectException(UnknownVehicleTypeException::class);
         $vehicleFactory->createVehicle(UnknownVehicle::class, 'Some name');

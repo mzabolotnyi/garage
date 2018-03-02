@@ -2,39 +2,42 @@
 
 namespace Model;
 
-class Truck extends Vehicle implements MovableInterface, LoadableInterface
+class Truck extends Vehicle
 {
+    /** @var CarEngine */
+    public $engine;
+
+    /** @var CargoBody */
+    public $cargoBody;
+
+    /** @var FuelTank */
+    public $fuelTank;
+
     public function __construct(string $name)
     {
         parent::__construct('Truck', $name);
-        $this->availableFuels = [Diesel::NAME];
     }
 
-    public function move()
+    public function setup()
     {
-        echo $this . ' moving' . '<br/>';
-
-        return $this;
+        $this->engine = new CarEngine();
+        $this->cargoBody = new CargoBody();
+        $this->fuelTank = new FuelTank([Diesel::NAME]);
     }
 
-    public function stop()
+    public function introduce()
     {
-        echo $this . ' stopped' . '<br/>';
+        echo $this . '<br/>';
 
-        return $this;
-    }
+        $this->cargoBody->load();
+        $this->engine->start();
+        $this->engine->drive();
+        $this->engine->stop();
+        $this->cargoBody->unload();
 
-    public function load()
-    {
-        echo $this . ' load cargo' . '<br/>';
+        $gasStation = new \GasStation();
+        $gasStation->refuelDiesel($this->fuelTank);
 
-        return $this;
-    }
-
-    public function unload()
-    {
-        echo $this . ' unload cargo' . '<br/>';
-
-        return $this;
+        echo '===============================' . '<br/>';
     }
 }

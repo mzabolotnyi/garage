@@ -12,5 +12,6 @@ $garage->addVehicle($vehicleFactory->createVehicle(\Model\Truck::class, 'Kamaz')
 $garage->addVehicle($vehicleFactory->createVehicle(\Model\Truck::class, 'Belaz'));
 $garage->addVehicle($vehicleFactory->createVehicle(\Model\Boat::class, 'Yamahay'));
 $garage->addVehicle($vehicleFactory->createVehicle(\Model\Helicopter::class, 'Cobra'));
+$garage->addVehicle($vehicleFactory->createVehicle(\Model\Horse::class, 'Buravyshka'));
 
 $garage->introduceVehicles();

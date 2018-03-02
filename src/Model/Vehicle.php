@@ -2,32 +2,23 @@
 
 namespace Model;
 
-abstract class Vehicle implements VehicleInterface
+abstract class Vehicle
 {
     protected $type;
     protected $name;
-    protected $availableFuels;
 
     public function __construct(string $type, string $name)
     {
         $this->type = $type;
         $this->name = $name;
-        $this->availableFuels = [];
     }
+
+    abstract public function setup();
+    abstract public function introduce();
 
     public function __toString()
     {
         return $this->getType() . ' ' . $this->getName();
-    }
-
-    public function refuel(Fuel $fuel)
-    {
-        echo $this . ' refuel with ' . $fuel . '<br/>';
-    }
-
-    public function canRefuel(Fuel $fuel)
-    {
-        return is_array($this->availableFuels) && in_array($fuel->getName(), $this->availableFuels);
     }
 
     public function getType()

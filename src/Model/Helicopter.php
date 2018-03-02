@@ -2,32 +2,38 @@
 
 namespace Model;
 
-class Helicopter extends Vehicle implements FlyableInterface
+class Helicopter extends Vehicle
 {
+    /** @var Propeller */
+    public $engine;
+
+    /** @var FuelTank */
+    public $fuelTank;
+
     public function __construct(string $name)
     {
         parent::__construct('Helicopter', $name);
-        $this->availableFuels = [Diesel::NAME];
     }
 
-    public function takeOff()
+    public function setup()
     {
-        echo $this . ' took off' . '<br/>';
-
-        return $this;
+        $this->engine = new Propeller();
+        $this->fuelTank = new FuelTank([Diesel::NAME]);
     }
 
-    public function fly()
+    public function introduce()
     {
-        echo $this . ' flying' . '<br/>';
+        echo $this . '<br/>';
 
-        return $this;
-    }
+        $this->engine->start();
+        $this->engine->takeOff();
+        $this->engine->fly();
+        $this->engine->landing();
+        $this->engine->stop();
 
-    public function landing()
-    {
-        echo $this . ' landing' . '<br/>';
+        $gasStation = new \GasStation();
+        $gasStation->refuelDiesel($this->fuelTank);
 
-        return $this;
+        echo '===============================' . '<br/>';
     }
 }
